@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Solar System Orbital Dynamics &mdash; vplanet 0.9.0
+ documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="vplanet 0.9.0
+ documentation" href="../index.html"/>
+        <link rel="up" title="Examples" href="../examples.html"/>
+        <link rel="next" title="VenusInterior" href="VenusInterior.html"/>
+        <link rel="prev" title="Seasonal and Milankovitch Climate Cycles" href="Milankovitch.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> vplanet
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9.0
+
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing VPLANET</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../help.html">Modules and Options</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="SpiNBody.html">spinbody</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Kepler-16.html">Kepler-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VenusWaterLoss.html">Water Loss on Venus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RadHeat.html">RadHeat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AtMescKepler-36.html">Kepler-36 Atmospheric Escape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EarthInterior.html">EarthInterior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BinaryTides.html">Evolution of Tight Stellar Binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Milankovitch.html">Seasonal and Milankovitch Climate Cycles</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Solar System Orbital Dynamics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#to-run-this-example">To run this example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expected-output">Expected output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="VenusInterior.html">VenusInterior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CassiniStates.html">Cassini States</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GalHabit.html">Galactic Evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Corot-7.html">Orbital Damping in the CoRoT-7 System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainSequence.html">Stellar evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MagneticBraking.html">Magnetic Braking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IoHeat.html">IoHeat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EarthMoonTides.html">Tidal Evolution of the Earth-Moon System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="O2BuildUp.html">Oxygen Buildup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../src.html">C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vplot.html">VPLOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">For developers</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplanet">GitHub</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">vplanet</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">vplanet</a> &raquo;</li>
+      
+        <li><a href="../examples.html">Examples</a>&raquo;</li>
+      
+    
+      <li>Solar System Orbital Dynamics</li>
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="solar-system-orbital-dynamics">
+<h1>Solar System Orbital Dynamics<a class="headerlink" href="#solar-system-orbital-dynamics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Orbital and rotational evolution of the Solar System.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Date</strong></td>
+<td>07/24/18</td>
+</tr>
+<tr class="row-even"><td><strong>Author</strong></td>
+<td>Russell Deitrick</td>
+</tr>
+<tr class="row-odd"><td><strong>Modules</strong></td>
+<td>distorb
+distrot</td>
+</tr>
+<tr class="row-even"><td><strong>Approx. runtime</strong></td>
+<td><div class="first last line-block">
+<div class="line">116 seconds (<code class="code docutils literal notranslate"><span class="pre">vpl.in</span></code>)</div>
+<div class="line">112 seconds (<code class="code docutils literal notranslate"><span class="pre">womoon/vpl.in</span></code>)</div>
+<div class="line">25 seconds (<code class="code docutils literal notranslate"><span class="pre">marshnb/vpl.in</span></code>)</div>
+<div class="line">110 seconds (<code class="code docutils literal notranslate"><span class="pre">marsvpl/vpl.in</span></code>)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><strong>Source code</strong></td>
+<td><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplanet-private/tree/master/examples/dist_solsys2">GitHub</a></td>
+</tr>
+</tbody>
+</table>
+<p>This example uses DistOrb to model the orbits of the solar system planets and
+DistRot to model the obliquity evolution of Earth and Mars. In this main
+directory, the precession of the Earth’s spin axis is forced to its present
+day value to emulate the effect of the Moon. In the <cite>womoon</cite> directory,
+the same simulation is run, but without this precessional forcing. The
+directory <cite>marsvpl</cite> contains a simulation of Mars’ obliquity backward in time
+using DistOrb and DistRot. This is compared to <cite>marshnb</cite>, which utilizes
+orbital data from HNBody (Rauch &amp; Hamilton 2002) to demonstrate the effects
+of secular resonances not resolved by DistOrb. Note that DistRot can use orbital
+elements generated by non-VPLANET sources.</p>
+</div>
+<div class="section" id="to-run-this-example">
+<h2>To run this example<a class="headerlink" href="#to-run-this-example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the main script</span>
+vplanet vpl.in
+
+<span class="c1"># Run the script without the Earth&#39;s moon</span>
+<span class="nb">cd</span> womoon
+vplanet vpl.in
+<span class="nb">cd</span> ..
+
+<span class="c1"># Run the Mars N-Body script</span>
+<span class="nb">cd</span> marshnb
+vplanet vpl.in
+<span class="nb">cd</span> ..
+
+<span class="c1"># Run the Mars vplanet script</span>
+<span class="nb">cd</span> marsvpl
+vplanet vpl.in
+<span class="nb">cd</span> ..
+
+python plotsolsys.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="expected-output">
+<h2>Expected output<a class="headerlink" href="#expected-output" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="examples/SSDistOrbDistRotInner.png"><img alt="examples/SSDistOrbDistRotInner.png" src="examples/SSDistOrbDistRotInner.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Eccentricity evolution (left) and inclination evolution (right) for the
+inner solar system planets over the next 1 Myr. Initial condition are taken
+from Appendix A of <a class="reference internal" href="../zzreferences.html#murraydermott99" id="id1">[5]</a>.</span></p>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="examples/SSDistOrbDistRotOuter.png"><img alt="examples/SSDistOrbDistRotOuter.png" src="examples/SSDistOrbDistRotOuter.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Eccentricity evolution (left) and inclination evolution (right) for the
+outer solar system planets over the next 1 Myr. Initial condition are taken
+from Appendix A of <a class="reference internal" href="../zzreferences.html#murraydermott99" id="id2">[5]</a>.</span></p>
+</div>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="examples/SSDistOrbDistRotObliq.png"><img alt="examples/SSDistOrbDistRotObliq.png" src="examples/SSDistOrbDistRotObliq.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Obliquity evolution of Earth with and without the Moon over the next Myr
+(left) and Mars using secular and N-body models for the orbit over the
+last 10 Myr (right).</span></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="VenusInterior.html" class="btn btn-neutral float-right" title="VenusInterior" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Milankovitch.html" class="btn btn-neutral" title="Seasonal and Milankovitch Climate Cycles" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, The VPLANET Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

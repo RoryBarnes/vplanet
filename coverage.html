@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Code coverage &mdash; vplanet 0.9.0
+ documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="vplanet 0.9.0
+ documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> vplanet
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9.0
+
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing VPLANET</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Modules and Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src.html">C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vplot.html">VPLOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developers.html">For developers</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplanet">GitHub</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">vplanet</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">vplanet</a> &raquo;</li>
+      
+    
+      <li>Code coverage</li>
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="code-coverage">
+<h1>Code coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline">¶</a></h1>
+<p>This page shows the code coverage results for the scripts in the
+<code class="code docutils literal notranslate"><span class="pre">tests/</span></code> directory using the
+<a class="reference external" href="https://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a> and
+<a class="reference external" href="http://ltp.sourceforge.net/coverage/lcov.php">lcov</a> tools.
+In a perfect world, the test scripts should hit every line of code.
+If your module has low coverage, you need to write some more test
+scripts!</p>
+<!--
+*Very* low security password protection.
+Based on https://github.com/chrisssycollins/protected-github-pages.
+The hash corresponding to the correct password is stored in the $COVERAGE_HASH
+variable on TRAVIS.
+-->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+
+<style>
+    *,
+    *:after,
+    *:before {
+        box-sizing: border-box;
+    }
+    body,
+    html {
+        background: #f2f2f2;
+        color: #2D3737;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100%;
+    }
+
+    .protected {
+        background: #fff;
+        -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+        border-radius: 3px;
+        min-width: 500px;
+
+    }
+    .protected__content {
+        padding: 24px 28px;
+    }
+    .protected__content__heading {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0 0 12px;
+        line-height: 1;
+    }
+    .protected__alert {
+        display: none;
+        border-bottom: 1px solid transparent;
+        border-radius: 3px 3px 0 0;
+        padding: 12px 14px;
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+    .protected__content__input {
+        display: block;
+        border: solid 1px #ccc;
+        padding: 12px 14px;
+        -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+        font-size: 16px;
+        width: 100%;
+        border-radius: 3px;
+
+        margin-bottom: 12px;
+    }
+    .protected__content__input:focus {
+        outline: none;
+        border-color: #228843;
+    }
+    .protected__content__btn {
+        background-color: #228843;
+        border-radius: 3px;
+        cursor: pointer;
+        border: none;
+        color: #fff;
+        padding: 12px 14px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+
+    }
+    .protected__content__btn:hover {
+        background-color: #1C6D36;
+    }
+
+</style>
+
+<div class="protected">
+    <div class="protected__alert" data-id="alert">You entered the wrong password</div>
+    <div class="protected__content">
+        <h1 class="protected__content__heading">You need a password to continue.</h1>
+        <input class="protected__content__input" data-id="password" type="password" placeholder="Hint: Rory's motto"/>
+        <button data-id="button" type="button" class="protected__content__btn">Continue</button>
+    </div>
+</div>
+<br/><br/>
+
+<script type="text/javascript" src="https://cdn.rawgit.com/chrisveness/crypto/master/sha1.js"></script>
+<script type="text/javascript">
+    "use strict"
+    var button = document.querySelectorAll('[data-id="button"]')
+    var password = document.querySelectorAll('[data-id="password"]')
+
+    function login(secret) {
+        var hash = Sha1.hash(secret)
+        var url = hash + "/index.html"
+        var alert = document.querySelectorAll('[data-id="alert"]')
+
+        var request = new XMLHttpRequest()
+        request.open('GET', url, true)
+
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                window.location = url
+            } else {
+                parent.location.hash = hash
+                alert[0].style.display = 'block'
+                password[0].setAttribute('placeholder', 'Incorrect password')
+                password[0].value = ''
+            }
+        }
+        request.onerror = function () {
+            parent.location.hash = hash
+            alert[0].style.display = 'block'
+            password[0].setAttribute('placeholder', 'Incorrect password')
+            password[0].value = ''
+        }
+        request.send()
+    }
+
+    button[0].addEventListener("click", function () {
+        login(password[0].value)
+    })
+
+    document.onkeydown = function (e) {
+        e = e || window.event
+        if (e.keyCode == 13) {
+            login(password[0].value)
+        }
+    }
+</script></div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, The VPLANET Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.9.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

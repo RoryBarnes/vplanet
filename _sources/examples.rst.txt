@@ -1,0 +1,32 @@
+Examples
+========
+
+A collection of example input files and scripts using **vplanet** that
+showcase the various applications of the code. The source files for
+the examples below live in the :code:`examples` folder in the top-level
+directory of the :code:`VPLANET` repository.
+`View them on GitHub <https://github.com/VirtualPlanetaryLaboratory/vplanet-private/tree/master/examples>`_.
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+   examples/SpiNBody
+   examples/Kepler-16
+   examples/VenusWaterLoss
+   examples/RadHeat
+   examples/AtMescKepler-36
+   examples/EarthInterior
+   examples/BinaryTides
+   examples/Milankovitch
+   examples/SSDistOrbDistRot
+   examples/VenusInterior
+   examples/CassiniStates
+   examples/GalHabit
+   examples/Corot-7
+   examples/MainSequence
+   examples/MagneticBraking
+   examples/IoHeat
+   examples/EarthMoonTides
+   examples/O2BuildUp

@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Evolution of Tight Stellar Binaries &mdash; vplanet 0.9.0
+ documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="vplanet 0.9.0
+ documentation" href="../index.html"/>
+        <link rel="up" title="Examples" href="../examples.html"/>
+        <link rel="next" title="Seasonal and Milankovitch Climate Cycles" href="Milankovitch.html"/>
+        <link rel="prev" title="EarthInterior" href="EarthInterior.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> vplanet
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9.0
+
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing VPLANET</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../help.html">Modules and Options</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="SpiNBody.html">spinbody</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Kepler-16.html">Kepler-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VenusWaterLoss.html">Water Loss on Venus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RadHeat.html">RadHeat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AtMescKepler-36.html">Kepler-36 Atmospheric Escape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EarthInterior.html">EarthInterior</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Evolution of Tight Stellar Binaries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#to-run-this-example">To run this example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expected-output">Expected output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Milankovitch.html">Seasonal and Milankovitch Climate Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SSDistOrbDistRot.html">Solar System Orbital Dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VenusInterior.html">VenusInterior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CassiniStates.html">Cassini States</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GalHabit.html">Galactic Evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Corot-7.html">Orbital Damping in the CoRoT-7 System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainSequence.html">Stellar evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MagneticBraking.html">Magnetic Braking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IoHeat.html">IoHeat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EarthMoonTides.html">Tidal Evolution of the Earth-Moon System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="O2BuildUp.html">Oxygen Buildup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../src.html">C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vplot.html">VPLOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">For developers</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplanet">GitHub</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">vplanet</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">vplanet</a> &raquo;</li>
+      
+        <li><a href="../examples.html">Examples</a>&raquo;</li>
+      
+    
+      <li>Evolution of Tight Stellar Binaries</li>
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="evolution-of-tight-stellar-binaries">
+<h1>Evolution of Tight Stellar Binaries<a class="headerlink" href="#evolution-of-tight-stellar-binaries" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Orbital circularization of short-period binary stars due to radial contraction on
+the pre-main sequence and tidal torques.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Date</strong></td>
+<td>07/25/18</td>
+</tr>
+<tr class="row-even"><td><strong>Author</strong></td>
+<td>David Fleming</td>
+</tr>
+<tr class="row-odd"><td><strong>Modules</strong></td>
+<td>eqtide
+stellar</td>
+</tr>
+<tr class="row-even"><td><strong>Approx. runtime</strong></td>
+<td>71 seconds</td>
+</tr>
+<tr class="row-odd"><td><strong>Source code</strong></td>
+<td><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplanet-private/tree/master/examples/zahn">GitHub</a></td>
+</tr>
+</tbody>
+</table>
+<p>As stars form, they contract onto the main sequence, and those in binary star systems
+can also experience tidal torques on the rotation and orbit. As tidal torques scale
+with stellar radius to the 5th power, the torques can be very strong early on. This
+early tidal evolution circularizes binary star orbits for orbital periods less than
+~8 days, which is observed :cite::Meibom05. This example reproduce Figure 1 of
+Zahn and Bouchet (1989) <a class="reference internal" href="../zzreferences.html#zahnbouchet89" id="id1">[1]</a> using <strong>EQTIDE</strong> and <strong>STELLAR</strong>.</p>
+</div>
+<div class="section" id="to-run-this-example">
+<h2>To run this example<a class="headerlink" href="#to-run-this-example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vplanet vpl.in
+python makeplot.py &lt;pdf <span class="p">|</span> png&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="expected-output">
+<h2>Expected output<a class="headerlink" href="#expected-output" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="examples/BinaryTides.png"><img alt="examples/BinaryTides.png" src="examples/BinaryTides.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Coupled stellar and tidal evolution of a solar twin binary from the pre-main
+sequence onward calculated in vplanet using the eqtide and stellar modules.
+Orbital eccentricity evolution is given by the red solid line, the orbital
+period by the purple dashed line, and the ratio of stellar rotation rate to
+binary mean motion (Omega/n) evolution is given by the blue dot dashed curve.
+The binary’s evolution qualitatively agrees with that of an identical system
+presented in Figure 1 of <a class="reference internal" href="../zzreferences.html#zahnbouchet89" id="id2">[1]</a>.</span></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Milankovitch.html" class="btn btn-neutral float-right" title="Seasonal and Milankovitch Climate Cycles" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="EarthInterior.html" class="btn btn-neutral" title="EarthInterior" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, The VPLANET Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

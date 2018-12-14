@@ -1,0 +1,1 @@
+.. include:: ../../examples/Kepler-16/README.rst
