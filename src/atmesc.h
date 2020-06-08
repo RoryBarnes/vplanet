@@ -50,7 +50,7 @@
 #define OPT_ENERGYLIMITED       1232 /**< Whether or not to use energy-limited escape */
 #define OPT_RRLIMITED           1233 /**< Whether or not to use radiation/recombination-limited escape */
 #define OPT_ATMESCAUTO          1234 /**< Whether or not to let atmesc determine escape regime */
-
+#define OPT_STOPWATERLOSSINHZ   1235 /**< Stop water loss once planet reaches HZ? */
 
 /* @cond DOXYGEN_OVERRIDE */
 
@@ -66,8 +66,9 @@ void ReadOptionsAtmEsc(BODY*,CONTROL*,FILES*,OPTIONS*,SYSTEM*,fnReadOption[],int
 #define ATMESCHALTSYSEND       5  /**< Start of AtmEsc halting functions */
 #define ATMESCHALTBODYEND      5  /**< End of AtmEsc halting functions */
 
-int fbHaltSurfaceDesiccated(BODY*,EVOLVE*,HALT*,IO*,UPDATE*,int);
-int fbHaltEnvelopeGone(BODY*,EVOLVE*,HALT*,IO*,UPDATE*,int);
+int fbHaltSurfaceDesiccated(BODY*,EVOLVE*,HALT*,IO*,UPDATE*,fnUpdateVariable***,
+      int);
+int fbHaltEnvelopeGone(BODY*,EVOLVE*,HALT*,IO*,UPDATE*,fnUpdateVariable***,int);
 void CountHaltsAtmEsc(HALT*,int*);
 
 /* Verify Functions */
@@ -156,7 +157,7 @@ double fdDOxygenMassDt(BODY*,SYSTEM*,int*);
 double fdDOxygenMantleMassDt(BODY*,SYSTEM*,int*);
 double fdAtomicOxygenMixingRatio(double,double);
 double fdInsolation(BODY*,int,int);
-int fbDoesWaterEscape(BODY*,int);
+int fbDoesWaterEscape(BODY*,EVOLVE*,IO*,int);
 double fdPlanetRadius(BODY*,SYSTEM*,int*);
 double fdXUVEfficiencyBolmont2016(double);
 double fdBondiRadius(BODY*,int);
@@ -165,6 +166,7 @@ double fdBondiLimitedDmDt(BODY*,int);
 int fbRRCriticalFlux(BODY*,int);
 int fbBondiCriticalDmDt(BODY*,int);
 double fdRRCriticalFlux(BODY*,int);
+void fvAtmEscRegimeChangeOutput(int,int,double);
 
 /* Dummy functions */
 double fdSurfEnFluxAtmEsc(BODY*,SYSTEM*,UPDATE*,int,int);

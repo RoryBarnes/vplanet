@@ -72,6 +72,7 @@ void BodyCopyAtmEsc(BODY *dest,BODY *src,int foo,int iNumBodies,int iBody) {
   dest[iBody].bAtmEscAuto = src[iBody].bAtmEscAuto;
   dest[iBody].dEnvMassDt = src[iBody].dEnvMassDt;
   dest[iBody].bAutoThermTemp = src[iBody].bAutoThermTemp;
+  dest[iBody].bStopWaterLossInHZ = src[iBody].bStopWaterLossInHZ;
 }
 
 /**************** ATMESC options ********************/
@@ -384,6 +385,36 @@ void ReadInstantO2Sink(BODY *body,CONTROL *control,FILES *files,OPTIONS *options
   } else
     if (iFile > 0)
       AssignDefaultInt(options,&body[iFile-1].bInstantO2Sink,files->iNumInputs);
+}
+
+/**
+Read the parameter that controls water loss once planet reaches HZ.
+
+@param body A pointer to the current BODY instance
+@param control A pointer to the integration CONTROL instance
+@param files A pointer to the array of input FILES
+@param options A pointer to the OPTIONS instance
+@param system A pointer to the SYSTEM instance
+@param iFile The current file number
+*/
+void ReadStopWaterLossInHZ(BODY *body,CONTROL *control,FILES *files,
+      OPTIONS *options,SYSTEM *system,int iFile) {
+  /* This parameter cannot exist in primary file */
+  int lTmp=-1;
+  int bTmp;
+
+  AddOptionBool(files->Infile[iFile].cIn,options->cName,&bTmp,&lTmp,
+      control->Io.iVerbose);
+  if (lTmp >= 0) {
+    NotPrimaryInput(iFile,options->cName,files->Infile[iFile].cIn,lTmp,
+        control->Io.iVerbose);
+    body[iFile-1].bStopWaterLossInHZ = bTmp;
+    UpdateFoundOption(&files->Infile[iFile],options,lTmp,iFile);
+  } else {
+    if (iFile > 0) {
+      AssignDefaultInt(options,&body[iFile-1].bStopWaterLossInHZ,files->iNumInputs);
+    }
+  }
 }
 
 
@@ -735,7 +766,7 @@ void InitializeOptionsAtmEsc(OPTIONS *options,fnReadOption fnRead[]) {
   options[OPT_ATMXABSEFFH].iType = 2;
   options[OPT_ATMXABSEFFH].bMultiFile = 1;
   fnRead[OPT_ATMXABSEFFH] = &ReadAtmXAbsEffH;
-  sprintf(options[OPT_XFRAC].cLongDescr,
+  sprintf(options[OPT_ATMXABSEFFH].cLongDescr,
     "XUV absoprtion efficiency parameter, epsilon_{XUV}, in Eq. (A1) in\n"
     "Barnes et al. (2019). Must lie in the range [0,1]."
   );
@@ -747,7 +778,7 @@ void InitializeOptionsAtmEsc(OPTIONS *options,fnReadOption fnRead[]) {
   options[OPT_ATMXABSEFFH2O].iType = 2;
   options[OPT_ATMXABSEFFH2O].bMultiFile = 1;
   fnRead[OPT_ATMXABSEFFH2O] = &ReadAtmXAbsEffH2O;
-  sprintf(options[OPT_XFRAC].cLongDescr,
+  sprintf(options[OPT_ATMXABSEFFH2O].cLongDescr,
     "XUV absoprtion efficiency parameter for water vapor as defined in\n"
     "Luger & Barnes (2015, AsBio, 15, 57). Must lie in range [0,1]."
   );
@@ -759,7 +790,7 @@ void InitializeOptionsAtmEsc(OPTIONS *options,fnReadOption fnRead[]) {
   options[OPT_ATMXABSEFFH2OMODEL].iType = 3;
   options[OPT_ATMXABSEFFH2OMODEL].bMultiFile = 1;
   fnRead[OPT_ATMXABSEFFH2OMODEL] = &ReadAtmXAbsEffH2OModel;
-  sprintf(options[OPT_XFRAC].cLongDescr,
+  sprintf(options[OPT_ATMXABSEFFH2OMODEL].cLongDescr,
     "If BOLMONT16 is selected, then the value of %s will follow the model of\n"
     "Bolmont et al. (2017, MNRAS, 464, 3728). NONE will not change the input\n"
     "value for %s.",options[OPT_ATMXABSEFFH2O].cName,options[OPT_ATMXABSEFFH2O].cName
@@ -790,7 +821,7 @@ void InitializeOptionsAtmEsc(OPTIONS *options,fnReadOption fnRead[]) {
   options[OPT_WATERLOSSMODEL].iType = 3;
   options[OPT_WATERLOSSMODEL].bMultiFile = 1;
   fnRead[OPT_WATERLOSSMODEL] = &ReadWaterLossModel;
-  sprintf(options[OPT_XFRAC].cLongDescr,
+  sprintf(options[OPT_WATERLOSSMODEL].cLongDescr,
     "The water loss rate will be determined by the selected model.\n"
     "The options are LB15, LBEXACT, and TIAN.\n"
   );
@@ -802,7 +833,7 @@ void InitializeOptionsAtmEsc(OPTIONS *options,fnReadOption fnRead[]) {
   options[OPT_PLANETRADIUSMODEL].iType = 3;
   options[OPT_PLANETRADIUSMODEL].bMultiFile = 1;
   fnRead[OPT_PLANETRADIUSMODEL] = &ReadPlanetRadiusModel;
-  sprintf(options[OPT_XFRAC].cLongDescr,
+  sprintf(options[OPT_PLANETRADIUSMODEL].cLongDescr,
     "If LOPEZ12 is selected, the planet radius will follow the model in\n"
     "Lopez et al. (2012, ApJ, 761, 59). PROXCENB will use the model for\n"
     "Proxima b in Barnes et al. (2016, arXiv:1608.06919). LEHMER17 is the\n"
@@ -815,9 +846,21 @@ void InitializeOptionsAtmEsc(OPTIONS *options,fnReadOption fnRead[]) {
   options[OPT_INSTANTO2SINK].iType = 0;
   options[OPT_INSTANTO2SINK].bMultiFile = 1;
   fnRead[OPT_INSTANTO2SINK] = &ReadInstantO2Sink;
-  sprintf(options[OPT_XFRAC].cLongDescr,
+  sprintf(options[OPT_INSTANTO2SINK].cLongDescr,
     "If set to 1, then all oxygen released by photolysis is immediately\n"
-    "removed from the atmosphere. This mimics rapid surface oxidation."
+    "removed from the atmosphere. This mimics rapid surface oxidation.\n"
+  );
+
+  sprintf(options[OPT_STOPWATERLOSSINHZ].cName,"bStopWaterLossInHZ");
+  sprintf(options[OPT_STOPWATERLOSSINHZ].cDescr,"Stop water photolysis and H escape in the HZ?");
+  sprintf(options[OPT_STOPWATERLOSSINHZ].cDefault,"1");
+  options[OPT_STOPWATERLOSSINHZ].iType = 0;
+  options[OPT_STOPWATERLOSSINHZ].bMultiFile = 1;
+  fnRead[OPT_STOPWATERLOSSINHZ] = &ReadStopWaterLossInHZ;
+  sprintf(options[OPT_STOPWATERLOSSINHZ].cLongDescr,
+    "If set to 1, then all water photolysis and hydrogen escape will not occur\n"
+    "for a planet in the habitable zone, defined to be when the instellation\n."
+    "is less than the runaway greenhouse threshold.\n"
   );
 
   sprintf(options[OPT_BONDILIMITED].cName,"bUseBondiLimited");
@@ -1174,20 +1217,17 @@ void fnForceBehaviorAtmEsc(BODY *body,MODULE *module,EVOLVE *evolve,IO *io,SYSTE
       if(fbRRCriticalFlux(body,iBody)) {
           // Switch regime, derivatives
           if (io->iVerbose >= VERBPROG) {
-            printf("Switching from energy-limited to RR-limited escape at t = %.4lf Myr.\n",
-              evolve->dTime/(1e6*YEARSEC));
+            fvAtmEscRegimeChangeOutput(body[iBody].iHEscapeRegime,ATMESC_RRLIM,evolve->dTime/(1e6*YEARSEC));
           }
           body[iBody].iHEscapeRegime = ATMESC_RRLIM;
           fnUpdate[iBody][update[iBody].iEnvelopeMass][0] = &fdDEnvelopeMassDtRRLimited;
           fnUpdate[iBody][update[iBody].iMass][0] = &fdDEnvelopeMassDtRRLimited;
         }
-
       // Is the flux Bondi-limited?
       if(fbBondiCriticalDmDt(body, iBody)) {
         // Switch regime, derivatives
         if (io->iVerbose >= VERBPROG) {
-          printf("Switching from energy-limited to Bondi-limited escape at t = %.4lf Myr.\n",
-            evolve->dTime/(1e6*YEARSEC));
+          fvAtmEscRegimeChangeOutput(body[iBody].iHEscapeRegime,ATMESC_BONDILIM,evolve->dTime/(1e6*YEARSEC));
         }
         body[iBody].iHEscapeRegime = ATMESC_BONDILIM;
         fnUpdate[iBody][update[iBody].iEnvelopeMass][0] = &fdDEnvelopeMassDtBondiLimited;
@@ -1200,8 +1240,7 @@ void fnForceBehaviorAtmEsc(BODY *body,MODULE *module,EVOLVE *evolve,IO *io,SYSTE
       if(!fbRRCriticalFlux(body,iBody)) {
           // Switch regime, derivatives
           if (io->iVerbose >= VERBPROG) {
-            printf("Switching from RR-limited to energy-limited escape at t = %.4lf Myr.\n",
-              evolve->dTime/(1e6*YEARSEC));
+            fvAtmEscRegimeChangeOutput(body[iBody].iHEscapeRegime,ATMESC_ELIM,evolve->dTime/(1e6*YEARSEC));
           }
           body[iBody].iHEscapeRegime = ATMESC_ELIM;
           fnUpdate[iBody][update[iBody].iEnvelopeMass][0] = &fdDEnvelopeMassDt;
@@ -1212,8 +1251,7 @@ void fnForceBehaviorAtmEsc(BODY *body,MODULE *module,EVOLVE *evolve,IO *io,SYSTE
       if(fbBondiCriticalDmDt(body, iBody)) {
         // Switch regime, derivatives
         if (io->iVerbose >= VERBPROG) {
-          printf("Switching from RR-limited to Bondi-limited escape at t = %.4lf Myr.\n",
-            evolve->dTime/(1e6*YEARSEC));
+          fvAtmEscRegimeChangeOutput(body[iBody].iHEscapeRegime,ATMESC_BONDILIM,evolve->dTime/(1e6*YEARSEC));
         }
         body[iBody].iHEscapeRegime = ATMESC_BONDILIM;
         fnUpdate[iBody][update[iBody].iEnvelopeMass][0] = &fdDEnvelopeMassDtBondiLimited;
@@ -1228,8 +1266,7 @@ void fnForceBehaviorAtmEsc(BODY *body,MODULE *module,EVOLVE *evolve,IO *io,SYSTE
         if(fbRRCriticalFlux(body,iBody)) {
           // Switch regime, derivatives
           if (io->iVerbose >= VERBPROG) {
-            printf("Switching from Bondi-limited to RR-limited escape at t = %.4lf Myr.\n",
-              evolve->dTime/(1e6*YEARSEC));
+            fvAtmEscRegimeChangeOutput(body[iBody].iHEscapeRegime,ATMESC_RRLIM,evolve->dTime/(1e6*YEARSEC));
           }
           body[iBody].iHEscapeRegime = ATMESC_RRLIM;
           fnUpdate[iBody][update[iBody].iEnvelopeMass][0] = &fdDEnvelopeMassDtRRLimited;
@@ -1239,8 +1276,7 @@ void fnForceBehaviorAtmEsc(BODY *body,MODULE *module,EVOLVE *evolve,IO *io,SYSTE
         else {
           // Switch regime, derivatives
           if (io->iVerbose >= VERBPROG) {
-            printf("Switching from Bondi-limited to energy-limited escape at t = %.4lf Myr.\n",
-              evolve->dTime/(1e6*YEARSEC));
+            fvAtmEscRegimeChangeOutput(body[iBody].iHEscapeRegime,ATMESC_ELIM,evolve->dTime/(1e6*YEARSEC));
           }
           body[iBody].iHEscapeRegime = ATMESC_ELIM;
           fnUpdate[iBody][update[iBody].iEnvelopeMass][0] = &fdDEnvelopeMassDt;
@@ -1333,7 +1369,7 @@ void fnPropsAuxAtmEsc(BODY *body,EVOLVE *evolve,IO *io,UPDATE *update,
   body[iBody].dFHDiffLim = BDIFF * g * ATOMMASS * (QOH - 1.) / (KBOLTZ * body[iBody].dFlowTemp * (1. + XO / (1. - XO)));
 
   // Is water escaping?
-  if (!fbDoesWaterEscape(body, iBody)) {
+  if (!fbDoesWaterEscape(body,evolve,io,iBody)) {
 
     body[iBody].dOxygenEta = 0;
     body[iBody].dCrossoverMass = 0;
@@ -1873,7 +1909,8 @@ Checks for surface desiccation and halts if necessary.
 @param update A pointer to the UPDATE instance
 @param iBody The current BODY number
 */
-int fbHaltSurfaceDesiccated(BODY *body,EVOLVE *evolve,HALT *halt,IO *io,UPDATE *update,int iBody) {
+int fbHaltSurfaceDesiccated(BODY *body,EVOLVE *evolve,HALT *halt,IO *io,
+    UPDATE *update,fnUpdateVariable ***fnUpdate,int iBody) {
 
   if (body[iBody].dSurfaceWaterMass <= body[iBody].dMinSurfaceWaterMass) {
     if (io->iVerbose >= VERBPROG) {
@@ -1896,7 +1933,8 @@ Checks for envelope evaporation and halts if necessary.
 @param update A pointer to the UPDATE instance
 @param iBody The current BODY number
 */
-int fbHaltEnvelopeGone(BODY *body,EVOLVE *evolve,HALT *halt,IO *io,UPDATE *update,int iBody) {
+int fbHaltEnvelopeGone(BODY *body,EVOLVE *evolve,HALT *halt,IO *io,
+      UPDATE *update,fnUpdateVariable ***fnUpdate,int iBody) {
 
   if (body[iBody].dEnvelopeMass <= body[iBody].dMinEnvelopeMass) {
     if (io->iVerbose >= VERBPROG) {
@@ -3032,7 +3070,7 @@ Computes whether or not water is escaping.
 @param body A pointer to the current BODY instance
 @param iBody The current BODY index
 */
-int fbDoesWaterEscape(BODY *body, int iBody) {
+int fbDoesWaterEscape(BODY *body, EVOLVE *evolve, IO *io, int iBody) {
   // TODO: The checks below need to be moved. Ideally we'd
   // just remove this equation from the matrix if the
   // escape conditions are not met.
@@ -3040,33 +3078,43 @@ int fbDoesWaterEscape(BODY *body, int iBody) {
   // 1. Check if there's hydrogen to be lost; this happens first
   if (body[iBody].dEnvelopeMass > 0) {
     // (But let's still check whether the RG phase has ended)
-    if ((body[iBody].dRGDuration == 0.) && (fdInstellation(body, iBody) < fdHZRG14(body,iBody)))
+    if ((body[iBody].dRGDuration == 0.) && (fdInstellation(body, iBody) <
+        fdHZRG14(body,iBody)))
       body[iBody].dRGDuration = body[iBody].dAge;
     return 0;
   }
 
-  // 2. Check if planet is beyond RG limit; otherwise, assume the
-  // cold trap prevents water loss.
+  // 2. Check if planet is beyond RG limit; if user requested water loss to stop
+  // (the cold trap prevents water loss) then water does not escape.
   // NOTE: The RG flux limit below is calculated based on body zero's
   // spectrum! The Kopparapu+14 limit is for a single star only. This
   // approximation for a binary is only valid if the two stars have
   // similar spectral types, or if body zero dominates the flux.
-  else if (fdInstellation(body, iBody) < fdHZRG14(body,iBody)) {
-    if (body[iBody].dRGDuration == 0.)
+  if (fdInstellation(body, iBody) < fdHZRG14(body,iBody)) {
+    if (body[iBody].dRGDuration == 0.) {
       body[iBody].dRGDuration = body[iBody].dAge;
-    return 0;
+      if (io->iVerbose > VERBPROG && !io->baEnterHZMessage[iBody]) {
+        printf("%s enters the habitable zone at %.2lf Myr.\n",body[iBody].cName,
+            evolve->dTime/(YEARSEC*1e6));
+        io->baEnterHZMessage[iBody] = 1;
+      }
+    }
+    // Only stop water loss if user requested, which is default
+    if (body[iBody].bStopWaterLossInHZ) {
+      return 0;
+    }
   }
 
   // 3. Is there still water to be lost?
-  else if (body[iBody].dSurfaceWaterMass <= 0)
+  if (body[iBody].dSurfaceWaterMass <= 0)
     return 0;
 
   // 4. Are we in the ballistic (Jeans) escape limit?
-  else if (body[iBody].dAge > body[iBody].dJeansTime)
+  if (body[iBody].dAge > body[iBody].dJeansTime) {
     return 0;
+  }
 
-  else
-    return 1;
+  return 1;
 
 }
 
@@ -3327,5 +3375,76 @@ int fbBondiCriticalDmDt(BODY *body, int iBody) {
   else {
     return 0;
   }
+}
 
+/**
+ Determine correct print statement to identify atmospheric escape regime change
+ string
+
+ @param iRegimeOld int previoius atmospheric escape regime
+ @param iRegimeNew int new atmospheric escape regime
+ @param dTime double time when regime change occurs
+
+ @return None
+*/
+void fvAtmEscRegimeChangeOutput(int iRegimeOld, int iRegimeNew, double dTime) {
+
+  // Define strings to represent atmospheric escape regime name
+  char saBondi[] = "Bondi-Limited Escape";
+  char saEnergy[] = "Energy-Limited Escape";
+  char saRR[] = "Radiation/Recombination-Limited Escape";
+  char saNone[] = "No Escape";
+
+  // Initially energy-limited escape
+  if(iRegimeOld == ATMESC_ELIM) {
+    if(iRegimeNew == ATMESC_RRLIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saEnergy,saRR,dTime);
+    }
+    else if (iRegimeNew == ATMESC_BONDILIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saEnergy,saBondi,dTime);
+    }
+    else if (iRegimeNew == ATMESC_NONE) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saEnergy,saNone,dTime);
+    }
+  }
+  // Initially RR-limited escape
+  else if (iRegimeOld == ATMESC_RRLIM) {
+    if(iRegimeNew == ATMESC_ELIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saRR,saEnergy,dTime);
+    }
+    else if (iRegimeNew == ATMESC_BONDILIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saRR,saBondi,dTime);
+    }
+    else if (iRegimeNew == ATMESC_NONE) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saRR,saNone,dTime);
+    }
+  }
+  // Initially Bondi-limited escape
+  else if (iRegimeOld == ATMESC_BONDILIM) {
+    if(iRegimeNew == ATMESC_ELIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saBondi,saEnergy,dTime);
+    }
+    else if (iRegimeNew == ATMESC_RRLIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saBondi,saRR,dTime);
+    }
+    else if (iRegimeNew == ATMESC_NONE) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saBondi,saNone,dTime);
+    }
+  }
+  // Initially None
+  else if (iRegimeOld == ATMESC_NONE) {
+    if(iRegimeNew == ATMESC_ELIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saNone,saEnergy,dTime);
+    }
+    else if (iRegimeNew == ATMESC_RRLIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saNone,saRR,dTime);
+    }
+    else if (iRegimeNew == ATMESC_BONDILIM) {
+      fprintf(stdout, "Switching from %s to %s at t = %.4lf Myr.\n",saNone,saBondi,dTime);
+    }
+  }
+  else {
+    fprintf(stderr,"ERROR: unknown initial atmospheric escape regime: %d\n",iRegimeOld);
+    exit(1);
+  }
 }

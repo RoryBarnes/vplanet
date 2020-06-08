@@ -214,24 +214,6 @@ void ReadHZModel(BODY *body,CONTROL *control,FILES *files,OPTIONS *options,SYSTE
       body[iFile-1].iHZModel = HZ_MODEL_KOPPARAPU;
 }
 
-void ReadTemperature(BODY *body,CONTROL *control,FILES *files,OPTIONS *options,SYSTEM *system,int iFile) {
-  /* This parameter cannot exist in primary file */
-  int lTmp=-1;
-  double dTmp;
-
-  AddOptionDouble(files->Infile[iFile].cIn,options->cName,&dTmp,&lTmp,control->Io.iVerbose);
-  if (lTmp >= 0) {
-    NotPrimaryInput(iFile,options->cName,files->Infile[iFile].cIn,lTmp,control->Io.iVerbose);
-    if (dTmp < 0)
-      body[iFile-1].dTemperature = dTmp*dNegativeDouble(*options,files->Infile[iFile].cIn,control->Io.iVerbose);
-    else
-      body[iFile-1].dTemperature = dTmp;
-    UpdateFoundOption(&files->Infile[iFile],options,lTmp,iFile);
-  } else
-    if (iFile > 0)
-      body[iFile-1].dTemperature = options->dDefault;
-}
-
 void ReadRossbyCut(BODY *body,CONTROL *control,FILES *files,OPTIONS *options,SYSTEM *system,int iFile) {
   /* This parameter cannot exist in primary file */
   int lTmp=-1;
@@ -267,7 +249,8 @@ void ReadEvolveRG(BODY *body,CONTROL *control,FILES *files,OPTIONS *options,SYST
 
 /* Halts */
 
-void ReadHaltEndBaraffeGrid(BODY *body,CONTROL *control,FILES *files,OPTIONS *options,SYSTEM *system,int iFile) {
+void ReadHaltEndBaraffeGrid(BODY *body,CONTROL *control,FILES *files,
+      OPTIONS *options,SYSTEM *system,int iFile) {
   /* This parameter cannot exist in primary file */
   int lTmp=-1;
   int bTmp;
@@ -392,14 +375,6 @@ void InitializeOptionsStellar(OPTIONS *options,fnReadOption fnRead[]) {
     "Maximum Greenhouse, and Early Mars habitable zone limits will be\n"
     "calculated from Kopparapu, R. et al. (2013, ApJ, 765, 131)."
   );
-
-  sprintf(options[OPT_TEMPERATURE].cName,"dTemperature");
-  sprintf(options[OPT_TEMPERATURE].cDescr,"Initial effective temperature");
-  sprintf(options[OPT_TEMPERATURE].cDefault,"TSUN");
-  options[OPT_TEMPERATURE].dDefault = TSUN;
-  options[OPT_TEMPERATURE].iType = 0;
-  options[OPT_TEMPERATURE].bMultiFile = 1;
-  fnRead[OPT_TEMPERATURE] = &ReadTemperature;
 
   sprintf(options[OPT_HALTENDBARAFFEFGRID].cName,"bHaltEndBaraffeGrid");
   sprintf(options[OPT_HALTENDBARAFFEFGRID].cDescr,"Halt when we reach the end of the Baraffe+15 grid?");
@@ -822,7 +797,8 @@ void FinalizeUpdateSemiStellar(BODY *body,UPDATE *update,int *iEqn,int iVar,int 
 
 /***************** STELLAR Halts *****************/
 
-int fbHaltEndBaraffeGrid(BODY *body,EVOLVE *evolve,HALT *halt,IO *io,UPDATE *update,int iBody) {
+int fbHaltEndBaraffeGrid(BODY *body,EVOLVE *evolve,HALT *halt,IO *io,
+      UPDATE *update,fnUpdateVariable ***fnUpdate,int iBody) {
   if (body[iBody].iStellarModel == STELLAR_MODEL_CONST) {
     if (io->iVerbose >= VERBPROG) {
       printf("HALT: %s reached the edge of the luminosity grid at ", body[iBody].cName);

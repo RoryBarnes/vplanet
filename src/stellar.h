@@ -38,7 +38,6 @@
 
 #define OPT_SATXUVFRAC          1511 /**< Saturation XUV luminosity fraction */
 #define OPT_STELLARMODEL        1512 /**< Luminosity evolution model */
-#define OPT_TEMPERATURE         1513 /**< Stellar effective temperature (initial) */
 #define OPT_WINDMODEL           1514 /**< Wind model */
 #define OPT_XUVMODEL            1515 /**< XUV evol model */
 #define OPT_HALTENDBARAFFEFGRID 1516 /**< Halt when we reach the end of the Baraffe grid? */
@@ -81,7 +80,8 @@ void HelpOptionsStellar(OPTIONS*);
 void InitializeOptionsStellar(OPTIONS*,fnReadOption[]);
 void ReadOptionsStellar(BODY*,CONTROL*,FILES*,OPTIONS*,SYSTEM*,fnReadOption[],int);
 
-int fbHaltEndBaraffeGrid(BODY*,EVOLVE*,HALT*,IO*,UPDATE*,int);
+int fbHaltEndBaraffeGrid(BODY*,EVOLVE*,HALT*,IO*,UPDATE*,fnUpdateVariable***,
+      int);
 void CountHaltsStellar(HALT*,int*);
 
 /* Verify Functions */

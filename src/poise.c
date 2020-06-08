@@ -1777,15 +1777,15 @@ void VerifyAstro(BODY *body, OPTIONS *options, char cFile[], int iBody, int iVer
     }
   }
   if (body[iBody].bForceObliq == 1) {
-    if (body[iBody].bDistRot == 1) {
+    if (body[iBody].bDistRot == 1) { // XXX Can't reference other modules here!
       if (iVerbose >= VERBERR)
         fprintf(stderr,"ERROR: Cannot set %s == 1 when using DistRot in File:%s\n", options[OPT_FORCEOBLIQ].cName, cFile);
       exit(EXIT_INPUT);
     } else {
       body[iBody].dObliq0 = body[iBody].dObliquity;
     }
-    if (body[iBody].dObliqAmp*DEGRAD > body[iBody].dObliq0) {
-        fprintf(stderr,"ERROR: %s > %s is not allowed.\n", options[OPT_OBLIQAMP].cName,options[OPT_OBL].cName);
+    if (body[iBody].dObliqAmp*DEGRAD > 2*body[iBody].dObliq0) {
+        fprintf(stderr,"ERROR: %s > (2 x %s) is not allowed.\n", options[OPT_OBLIQAMP].cName,options[OPT_OBL].cName);
         DoubleLineExit(cFile,cFile,options[OPT_OBLIQAMP].iLine[iBody + 1],options[OPT_OBL].iLine[iBody + 1]);
     }
   }
@@ -1797,9 +1797,17 @@ void VerifyAstro(BODY *body, OPTIONS *options, char cFile[], int iBody, int iVer
     } else {
       body[iBody].dEcc0 = body[iBody].dEcc;
     }
-    if (body[iBody].dEccAmp > body[iBody].dEcc) {
-        fprintf(stderr,"ERROR: %s > %s is not allowed.\n", options[OPT_ECCAMP].cName,options[OPT_ORBECC].cName);
+    if (body[iBody].dEccAmp > 2*body[iBody].dEcc) {
+        fprintf(stderr,"ERROR: %s > (2 x %s) is not allowed.\n", options[OPT_ECCAMP].cName,options[OPT_ORBECC].cName);
         DoubleLineExit(cFile,cFile,options[OPT_ECCAMP].iLine[iBody + 1],options[OPT_ORBECC].iLine[iBody + 1]);
+    }
+    if (body[iBody].dEcc + 0.5*body[iBody].dEccAmp >= 1) {
+      if (iVerbose >= VERBERR) {
+        fprintf(stderr,"ERROR: The sum of %s and %s must be less than 1.",
+            options[OPT_ECCAMP].cName,options[OPT_ORBECC].cName);
+        }
+      DoubleLineExit(cFile,cFile,options[OPT_ECCAMP].iLine[iBody + 1],
+          options[OPT_ORBECC].iLine[iBody + 1]);
     }
   }
 }
@@ -1921,16 +1929,83 @@ void WriteTGlobal(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNIT
 void WriteAlbedoGlobal(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
   /* Get AlbedoGlobal */
   *dTmp = body[iBody].dAlbedoGlobal;
+  strcpy(cUnit,"");
 }
 
-void WriteSnowball(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+void WriteSnowball(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
   /* Get snowball status */
   *dTmp = (double)body[iBody].bSnowball;
+  strcpy(cUnit,"");
+}
+
+void WriteNorthIceCapLand(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbNorthIceCapLand(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteNorthIceCapSea(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbNorthIceCapSea(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteSouthIceCapLand(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbSouthIceCapLand(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteSouthIceCapSea(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbSouthIceCapSea(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteIceBeltLand(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbIceBeltLand(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteIceBeltSea(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbIceBeltSea(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteSnowballLand(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbSnowballLand(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteSnowballSea(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbSnowballSea(body,iBody);
+  strcpy(cUnit,"");
+}
+
+void WriteIceFree(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,
+    UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
+
+  *dTmp = (double)fbIceFree(body,iBody);
+  strcpy(cUnit,"");
 }
 
 void WriteSkipSeas(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
   /* Get AlbedoGlobal */
   *dTmp = body[iBody].bSkipSeas;
+  strcpy(cUnit,"");
 }
 
 void WriteTempLat(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
@@ -2063,6 +2138,7 @@ void WriteAlbedoLat(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UN
   } else if (body[iBody].bClimateModel == SEA) {
     *dTmp = body[iBody].daAlbedoAvg[body[iBody].iWriteLat];
   }
+  strcpy(cUnit,"");
 }
 
 void WriteAlbedoLandLat(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
@@ -2071,6 +2147,7 @@ void WriteAlbedoLandLat(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *syste
   } else if (body[iBody].bClimateModel == SEA) {
     *dTmp = body[iBody].daAlbedoAvgL[body[iBody].iWriteLat];
   }
+  strcpy(cUnit,"");
 }
 
 void WriteAlbedoWaterLat(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
@@ -2079,6 +2156,7 @@ void WriteAlbedoWaterLat(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *syst
   } else if (body[iBody].bClimateModel == SEA) {
     *dTmp = body[iBody].daAlbedoAvgW[body[iBody].iWriteLat];
   }
+  strcpy(cUnit,"");
 }
 
 void WriteFluxInGlobal(BODY *body,CONTROL *control,OUTPUT *output,SYSTEM *system,UNITS *units,UPDATE *update,int iBody,double *dTmp,char cUnit[]) {
@@ -2926,7 +3004,8 @@ void InitializeOutputPoise(OUTPUT *output,fnWriteOutput fnWrite[]) {
   fnWrite[OUT_ENERGYRESW] = &WriteEnergyResW;
 
   sprintf(output[OUT_SKIPSEAS].cName,"SkipSeas");
-  sprintf(output[OUT_SKIPSEAS].cDescr,"Is Seasonal model skipped due to RGH or snowball?");
+  sprintf(output[OUT_SKIPSEAS].cDescr,
+      "Is Seasonal model skipped due to RGH or snowball?");
   output[OUT_SKIPSEAS].bNeg = 0;
   output[OUT_SKIPSEAS].iNum = 1;
   output[OUT_SKIPSEAS].iModuleBit = POISE;
@@ -2948,6 +3027,73 @@ void InitializeOutputPoise(OUTPUT *output,fnWriteOutput fnWrite[]) {
   output[OUT_AREAICECOV].iNum = 1;
   output[OUT_AREAICECOV].iModuleBit = POISE;
   fnWrite[OUT_AREAICECOV] = &WriteAreaIceCov;
+
+  sprintf(output[OUT_NORTHICECAPLAND].cName,"NorthIceCapLand");
+  sprintf(output[OUT_NORTHICECAPLAND].cDescr,
+      "Does the planet have a northern polar ice cap on land?");
+  output[OUT_NORTHICECAPLAND].bNeg = 0;
+  output[OUT_NORTHICECAPLAND].iNum = 1;
+  output[OUT_NORTHICECAPLAND].iModuleBit = POISE;
+  fnWrite[OUT_NORTHICECAPLAND] = &WriteNorthIceCapLand;
+
+  sprintf(output[OUT_NORTHICECAPSEA].cName,"NorthIceCapSea");
+  sprintf(output[OUT_NORTHICECAPSEA].cDescr,
+      "Does the planet have a northern polar sea ice cap");
+  output[OUT_NORTHICECAPSEA].bNeg = 0;
+  output[OUT_NORTHICECAPSEA].iNum = 1;
+  output[OUT_NORTHICECAPSEA].iModuleBit = POISE;
+  fnWrite[OUT_NORTHICECAPSEA] = &WriteNorthIceCapSea;
+
+  sprintf(output[OUT_SOUTHICECAPLAND].cName,"SouthIceCapLand");
+  sprintf(output[OUT_SOUTHICECAPLAND].cDescr,
+      "Does the planet have a southern polar ice cap on land?");
+  output[OUT_SOUTHICECAPLAND].bNeg = 0;
+  output[OUT_SOUTHICECAPLAND].iNum = 1;
+  output[OUT_SOUTHICECAPLAND].iModuleBit = POISE;
+  fnWrite[OUT_SOUTHICECAPLAND] = &WriteSouthIceCapLand;
+
+  sprintf(output[OUT_SOUTHICECAPSEA].cName,"SouthIceCapSea");
+  sprintf(output[OUT_SOUTHICECAPSEA].cDescr,
+      "Does the planet have a southern polar sea ice cap?");
+  output[OUT_SOUTHICECAPSEA].bNeg = 0;
+  output[OUT_SOUTHICECAPSEA].iNum = 1;
+  output[OUT_SOUTHICECAPSEA].iModuleBit = POISE;
+  fnWrite[OUT_SOUTHICECAPSEA] = &WriteSouthIceCapSea;
+
+  sprintf(output[OUT_ICEBELTLAND].cName,"IceBeltLand");
+  sprintf(output[OUT_ICEBELTLAND].cDescr,"Does the planet have a land ice belt?");
+  output[OUT_ICEBELTLAND].bNeg = 0;
+  output[OUT_ICEBELTLAND].iNum = 1;
+  output[OUT_ICEBELTLAND].iModuleBit = POISE;
+  fnWrite[OUT_ICEBELTLAND] = &WriteIceBeltLand;
+
+  sprintf(output[OUT_ICEBELTSEA].cName,"IceBeltSea");
+  sprintf(output[OUT_ICEBELTSEA].cDescr,"Does the planet have a sea ice belt?");
+  output[OUT_ICEBELTSEA].bNeg = 0;
+  output[OUT_ICEBELTSEA].iNum = 1;
+  output[OUT_ICEBELTSEA].iModuleBit = POISE;
+  fnWrite[OUT_ICEBELTSEA] = &WriteIceBeltSea;
+
+  sprintf(output[OUT_SNOWBALLLAND].cName,"SnowballLand");
+  sprintf(output[OUT_SNOWBALLLAND].cDescr,"Is all land covered in ice?");
+  output[OUT_SNOWBALLLAND].bNeg = 0;
+  output[OUT_SNOWBALLLAND].iNum = 1;
+  output[OUT_SNOWBALLLAND].iModuleBit = POISE;
+  fnWrite[OUT_SNOWBALLLAND] = &WriteSnowballLand;
+
+  sprintf(output[OUT_SNOWBALLSEA].cName,"SnowballSea");
+  sprintf(output[OUT_SNOWBALLSEA].cDescr,"Is all sea covered in ice?");
+  output[OUT_SNOWBALLSEA].bNeg = 0;
+  output[OUT_SNOWBALLSEA].iNum = 1;
+  output[OUT_SNOWBALLSEA].iModuleBit = POISE;
+  fnWrite[OUT_SNOWBALLSEA] = &WriteSnowballSea;
+
+  sprintf(output[OUT_ICEFREE].cName,"IceFree");
+  sprintf(output[OUT_ICEFREE].cDescr,"Is the planet free of sea and land ice?");
+  output[OUT_ICEFREE].bNeg = 0;
+  output[OUT_ICEFREE].iNum = 1;
+  output[OUT_ICEFREE].iModuleBit = POISE;
+  fnWrite[OUT_ICEFREE] = &WriteIceFree;
 }
 
 /************ POISE Logging Functions **************/
@@ -3031,10 +3177,68 @@ double BasalFlow(BODY *body, int iBody, int iLat){
 }
 
 /**
+Is a specific latitude's sea component covered in ice?
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+*/
+double fbIceLatSea(BODY *body,int iBody,int iLat) {
+  if (body[iBody].daSeaIceHeight[iLat] > 0 ||
+      body[iBody].daTempMaxWater[iLat] < body[iBody].dFrzTSeaIce) {
+    return 1;
+  }
+
+  return 0;
+}
+
+/**
+Is a specific latitude's sea component covered in ice?
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+*/
+double fbIceLatLand(BODY *body,int iBody,int iLat) {
+  if (body[iBody].daIceHeight[iLat] > 0) {
+    return 1;
+  } else if (body[iBody].daIceHeight[iLat] == 0 &&
+      body[iBody].daTempMaxLand[iLat] < 0) {
+    return 1;
+  }
+
+  return 0;
+}
+
+/**
+Determines if planet has no surface ice
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+@return 1 for no sea or land ice free, 0 for ice
+
+*/
+int fbIceFree(BODY *body, int iBody) {
+  int iLat, bSea, bLand, iNum=0;
+
+  for (iLat=0;iLat<body[iBody].iNumLats;iLat++) {
+    bSea = fbIceLatSea(body,iBody,iLat);
+    bLand = fbIceLatLand(body,iBody,iLat);
+    if (bSea || bLand) {
+      return 0;
+    }
+  }
+
+  // No ice found
+  return 1;
+}
+
+/**
 Determines if planet has entered snowball state
 
 @param body Struct containing all body information and variables
 @param iBody Body in question
+
+XXX This should really be removed or modified in order to be consistent with
+other ice coverage functions!!!! XXX
 */
 void Snowball(BODY *body, int iBody) {
   int iLat, iNum=0;
@@ -3056,6 +3260,234 @@ void Snowball(BODY *body, int iBody) {
     body[iBody].bSnowball = 0;
   }
 }
+
+/**
+Is all the land on the planet covered in ice?
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+*/
+int fbSnowballLand(BODY *body,int iBody) {
+  int iLat, iNum=0;
+
+  for (iLat=0;iLat<body[iBody].iNumLats;iLat++) {
+    if (fbIceLatLand(body,iBody,iLat)) {
+      iNum++;
+    }
+  }
+
+  if (iNum == body[iBody].iNumLats) {
+    return 1;
+  }
+
+  return 0;
+
+}
+
+/**
+Are the planet's seas all ice-covered?
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+*/
+int fbSnowballSea(BODY *body,int iBody) {
+  int iLat, iNum=0;
+
+  for (iLat=0;iLat<body[iBody].iNumLats;iLat++) {
+    if (fbIceLatSea(body,iBody,iLat)) {
+      iNum++;
+    }
+  }
+
+  if (iNum == body[iBody].iNumLats) {
+    return 1;
+  }
+
+  return 0;
+}
+
+
+
+/**
+Determines if planet has a northern polar ice cap on land
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+@return 1 for northern polar ice cap, 0 for ice free north pole
+*/
+int fbNorthIceCapLand(BODY *body, int iBody) {
+  int iLat, iNum=0;
+
+  // Check for ice at north pole; no ice at +90 => No ice cap
+  if (!fbIceLatLand(body,iBody,0)) {
+    return 0;
+  }
+
+  // Icy north pole; does ice extend to other pole?
+  if (fbSnowballLand(body,iBody)) {
+    return 0;
+  }
+
+  // If made it here, must be a northern polar cap
+  return 1;
+}
+
+/**
+Determines if planet has a northern polar see ice cap
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+@return 1 for northern polar ice cap, 0 for ice free north pole
+*/
+int fbNorthIceCapSea(BODY *body, int iBody) {
+  int iLat, iNum=0;
+
+  // Check for ice at north pole; no ice at +90 => No ice cap
+  if (!fbIceLatSea(body,iBody,0)) {
+    return 0;
+  }
+
+  // Icy north pole; does ice extend to other pole?
+  if (fbSnowballSea(body,iBody)) {
+    return 0;
+  }
+
+  // If made it here, must be a northern polar cap
+  return 1;
+}
+
+/**
+Determines if planet has a southern polar ice cap on land
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+@return 1 for southern polar ice cap, 0 for ice free south pole
+*/
+int fbSouthIceCapLand(BODY *body, int iBody) {
+  int iLat, iNum=0;
+
+  // Check for ice at south pole; no ice at -90 => No ice cap
+  if (!fbIceLatLand(body,iBody,body[iBody].iNumLats-1)) {
+    return 0;
+  }
+
+  // Icy south pole; does ice extend to other pole?
+  if (fbSnowballLand(body,iBody)) {
+    return 0;
+  }
+
+  // If made it here, must be a southern polar cap
+  return 1;
+}
+
+/**
+Determines if planet has a southern polar sea ice cap
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+@return 1 for southern polar ice cap, 0 for ice free south pole
+*/
+int fbSouthIceCapSea(BODY *body, int iBody) {
+  int iLat, iNum=0;
+
+  // Check for ice at south pole; no ice at -90 => No ice cap
+  if (!fbIceLatSea(body,iBody,body[iBody].iNumLats-1)) {
+    return 0;
+  }
+
+  // Icy south pole; does ice extend to other pole?
+  if (fbSnowballSea(body,iBody)) {
+    return 0;
+  }
+
+  // If made it here, must be a southern polar cap
+  return 1;
+}
+
+
+
+/**
+Determines if planet has an equatorial ice belt on land
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+@return 1 for ice belt, 0 for ice free equator
+*/
+int fbIceBeltLand(BODY *body, int iBody) {
+  int bSnowball,bNorthEdge,bSouthEdge,iLat,iEquator;
+
+  iEquator = (int)(body[iBody].iNumLats/2);
+
+  // Is equator ice free?
+  if (!fbIceLatLand(body,iBody,iEquator)) {
+    return 0;
+  }
+
+  // Ice at the equator, now search for ice belt
+  bNorthEdge = 0;
+  bSouthEdge = 0;
+  // Is there a northern edge to the ice sheet?
+  for (iLat=iEquator-1;iLat>=0;iLat--) {
+    if (!fbIceLatLand(body,iBody,iLat)) {
+      bNorthEdge = 1;
+      iLat=0; // exit loop
+    }
+  }
+  // Is there a southern edge to the ice sheet?
+  for (iLat=iEquator+1;iLat<body[iBody].iNumLats;iLat++) {
+    if (!fbIceLatLand(body,iBody,iLat)) {
+      bSouthEdge = 1;
+      iLat=body[iBody].iNumLats;
+    }
+  }
+  if (bNorthEdge && bSouthEdge) {
+    return 1;
+  }
+
+  return 0;
+}
+
+/**
+Determines if planet has an equatorial ice belt on land
+
+@param body Struct containing all body information and variables
+@param iBody Body in question
+@return 1 for ice belt, 0 for ice free equator
+*/
+int fbIceBeltSea(BODY *body, int iBody) {
+  int bSnowball,bNorthEdge,bSouthEdge,iLat,iEquator;
+
+  iEquator = (int)(body[iBody].iNumLats/2);
+
+  // Is equator ice free?
+  if (!fbIceLatLand(body,iBody,iEquator)) {
+    return 0;
+  }
+
+  // Ice at the equator, now search for ice belt
+  bNorthEdge = 0;
+  bSouthEdge = 0;
+  // Is there a northern edge to the ice sheet?
+  for (iLat=iEquator-1;iLat>=0;iLat--) {
+    if (!fbIceLatSea(body,iBody,iLat)) {
+      bNorthEdge = 1;
+      iLat=0; // exit loop
+    }
+  }
+  // Is there a southern edge to the ice sheet?
+  for (iLat=iEquator+1;iLat<body[iBody].iNumLats;iLat++) {
+    if (!fbIceLatSea(body,iBody,iLat)) {
+      bSouthEdge = 1;
+      iLat=body[iBody].iNumLats;
+    }
+  }
+  if (bNorthEdge && bSouthEdge) {
+    return 1;
+  }
+
+  return 0;
+}
+
 
 /**
 Standard properties function for POISE. Updates auxiliary quantities
