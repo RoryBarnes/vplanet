@@ -4,23 +4,28 @@
 
 <h1 align="center">VPLanet: The Virtual Planet Simulator</h1>
 
+
+<h2 align="center">The First VPLanet Developers Conference will take place the week of June 7th, 2021! More details soon.</h2>
+
 <p align="center">
   <a href="https://VirtualPlanetaryLaboratory.github.io/vplanet"><img src="https://img.shields.io/badge/read-the_docs-blue.svg?style=flat"></a>
   <a href="https://ui.adsabs.harvard.edu/abs/2019arXiv190506367B/abstract"><img src="https://img.shields.io/badge/read-the_paper-7d93c7.svg?style=flat"/></a>
   <a href="http://twitter.com/VPLanetCode"><img src="https://img.shields.io/twitter/follow/VPLanetCode.svg?style=flat-square&logo=twitter&label=Follow"></a><br>
   <a href="http://ascl.net/1811.017"><img src="https://img.shields.io/badge/ascl-1811.017-blue.svg?colorB=262255" alt="ascl:1811.017" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-purple.svg"/></a>
-  <a href="examples"><img src="https://img.shields.io/badge/examples-33-darkblue.svg"/></a>
+  <a href="examples"><img src="https://img.shields.io/badge/examples-34-darkblue.svg"/></a>
   <img src = "https://img.shields.io/badge/platform-Linux_|%20macOS_|%20Windows10-darkgreen.svg?style=flat"><br>
   <a href="https://travis-ci.com/VirtualPlanetaryLaboratory/vplanet"><img src="https://travis-ci.com/VirtualPlanetaryLaboratory/vplanet.svg?token=jABaFLLgJNHTWSqkT7CM&branch=master"></a>
-  <a href="tests"><img src = "https://img.shields.io/badge/tests-46-darkorange.svg?style=flat"></a>
+  <a href="tests"><img src = "https://img.shields.io/badge/tests-49-darkorange.svg?style=flat"></a>
   <img src = "https://img.shields.io/badge/memcheck-clean-green.svg?style=flat">
-  <img src = "https://img.shields.io/badge/coverage-77%25-red.svg?style=flat">
+  <a href="https://codecov.io/gh/VirtualPlanetaryLaboratory/vplanet">
+  <img src="https://codecov.io/gh/VirtualPlanetaryLaboratory/vplanet/branch/master/graph/badge.svg?token=3LFJQO1M6H"/>
+  </a>
 </p>
 
 ### Overview
 
-`VPLanet` is software to simulate planetary system evolution, with a focus on habitability. Physical models, typically consisting of ordinary differential equations, are coupled together to simulate evolution, from planetary cores to passing stars, for the age of a system. We strive for full transparency and reproducibility in our software, and this repository contains 1) the [source code](src), 2) [extensive documentation](https://VirtualPlanetaryLaboratory.github.io/vplanet), 3) [the scripts and files to generate published figures](examples), and 4) [scripts to validate the current release](tests). We can't claim we found aliens with closed source software!
+`VPLanet` is software to simulate planetary system evolution, with a focus on habitability. Physical models, typically consisting of ordinary differential equations, are coupled together to simulate evolution, from planetary cores to passing stars, for the age of a system. We strive for full transparency and reproducibility in our software, and this repository contains 1) the [source code](src), 2) [extensive documentation](https://VirtualPlanetaryLaboratory.github.io/vplanet), 3) scripts and files to [generate published figures](examples) and perform [parameter sweeps](https://virtualplanetarylaboratory.github.io/vplanet/parametersweep.html), and 4) [scripts to validate the current release](tests). We can't claim we found aliens with closed source software!
 
 To get started, ensure you have clang/gcc installed and follow the [Installation Guide](https://virtualplanetarylaboratory.github.io/vplanet/quickstart.html). To stay up to date on this repository, [follow it on twitter](https://twitter.com/VPLanetCode).
 
@@ -65,11 +70,11 @@ Many of these modules can be combined together to simulate numerous phenomena an
 
 The [examples/](examples) directory contains input files and scripts for generating the figures in [Barnes et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020PASP..132b4502B/abstract) and subsequent publications. The [Manual/](Manual) directory contains the pdf of [Barnes et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020PASP..132b4502B/abstract), which describes the physics of the first 11 modules, validates the software against observations and/or past results, and uses figures from the [examples/](examples) directory.
 
-An ecosystem of support software is also publicly available. In this repo, [vspace/](vspace) contains scripts to generate input files for a parameter space sweep, and then use [multi-planet/](multiplanet) to perform the simulations on an arbitrary number of cores. [bigplanet/](bigplanet) contains scripts to store large datasets in HDF5 format and quickly calculate summary properties from an integration, such as change in surface temperature. In a separate repository is [vplot](https://github.com/VirtualPlanetaryLaboratory/vplot), which consists of both a command line tool to quickly plot the evolution of a system, and also matplotlib functions to generate publication-worthy figures. Finally, we recommend using [approxposterior](https://github.com/dflemin3/approxposterior) to quickly obtain posterior distributions of model parameters. These python scripts are optimized for [anaconda](https://www.anaconda.com/) distributions versions 3.5-3.7.
+An ecosystem of support software is also publicly available. In this repo, [vspace/](vspace) contains scripts to generate input files for a parameter space sweep, and then use [multi-planet/](multiplanet) to perform the simulations on an arbitrary number of cores. [bigplanet/](bigplanet) contains scripts to store large datasets in HDF5 format and quickly calculate summary properties from an integration, such as change in surface temperature. These three scripts can be run from the command line to seamlessly [perform parameter sweeps](https://virtualplanetarylaboratory.github.io/vplanet/parametersweep.html). In a separate repository is [vplot](https://github.com/VirtualPlanetaryLaboratory/vplot), which consists of both a command line tool to quickly plot the evolution of a system, and also matplotlib functions to generate publication-worthy figures. Finally, we recommend using [approxposterior](https://github.com/dflemin3/approxposterior) to quickly obtain posterior distributions of model parameters. These python scripts are optimized for [anaconda](https://www.anaconda.com/) distributions versions 3.5-3.7.
 
 ### Code Integrity
 
-Behind the scenes, the VPLanet team maintains code integrity through [continuous integration](https://travis-ci.org), in which numerous scientific and numerical tests are validated at every commit. Check the "build" badge above for the current status. See the [tests/](tests) directory for the validation checks that the current build passes. The "coverage" badge shows the percentage of the code (by line number) that is currently tested. Additionally, we use [valgrind](http://valgrind.org) and [addresssanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer) to periodically search for memory issues like use of uninitialized memory, accessing memory beyond array bounds, etc. The "memcheck" badge shows the current status of the master branch, either clean (no errors) or dirty. If dirty, check the [Issues](https://github.com/VirtualPlanetaryLaboratory/vplanet/issues) for more information about the current status. Note that all releases are clean. We are committed to maintaining a stable tool for scientists to analyze any planetary system.  
+Behind the scenes, the VPLanet team maintains code integrity through [continuous integration](https://travis-ci.org), in which numerous scientific and numerical tests are validated at every commit. Check the "build" badge above for the current status. See the [tests/](tests) directory for the validation checks that the current build passes. The "coverage" badge shows the percentage of the code (by line number) that is currently tested by <a href="https://codecov.io/gh/VirtualPlanetaryLaboratory/vplanet">Codecov</a> at every commit. Additionally, we use [valgrind](http://valgrind.org) and [addresssanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer) to periodically search for memory issues like use of uninitialized memory, accessing memory beyond array bounds, etc. The "memcheck" badge shows the current status of the master branch, either clean (no errors) or dirty. If dirty, check the [Issues](https://github.com/VirtualPlanetaryLaboratory/vplanet/issues) for more information about the current status. Note that all releases are clean. We are committed to maintaining a stable tool for scientists to analyze any planetary system.  
 
 
 ### Community

@@ -1,10 +1,8 @@
-sudo: required
-
 dist: trusty
 
 language: c
 
-complier:
+compiler:
     gcc
 
 addons:
@@ -24,7 +22,6 @@ matrix:
 install:
     #- git lfs pull
     - source .ci/travis.sh
-    - pip install coveralls
 
 cache:
     directories:
@@ -39,5 +36,5 @@ script:
     - make coverage
 
 after_success:
-    - coveralls 
     - if [ "$TRAVIS_BRANCH" = "master" ]; then source .ci/build-docs.sh; fi
+    - if [ "$TRAVIS_BRANCH" = "master" ]; then bash <(curl -s https://codecov.io/bash); fi
