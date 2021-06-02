@@ -5,10 +5,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Magnetic Braking &mdash; vplanet 0.9.0
+  <title>Stellar Magnetic Braking &mdash; VPLanet 2.0.1
  documentation</title>
   
 
@@ -29,16 +30,22 @@
   
 
   
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="vplanet 0.9.0
+    <link rel="top" title="VPLanet 2.0.1
  documentation" href="../index.html"/>
         <link rel="up" title="Examples" href="../examples.html"/>
-        <link rel="next" title="IoHeat" href="IoHeat.html"/>
-        <link rel="prev" title="Stellar evolution" href="MainSequence.html"/> 
+        <link rel="next" title="Parameter Sweep Example" href="ParameterSweep.html"/>
+        <link rel="prev" title="Proxima Centauri b as a “Habitable Evaporated Core.”" href="HabEvapCore.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -56,7 +63,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> vplanet
+            <a href="../index.html" class="icon icon-home"> VPLanet
           
 
           
@@ -66,7 +73,7 @@
             
             
               <div class="version">
-                0.9.0
+                2.0.1
 
               </div>
             
@@ -89,38 +96,60 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing VPLANET</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing VPLanet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../help.html">Modules and Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../help.html">Options and Outputs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="SpiNBody.html">spinbody</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Kepler-16.html">Kepler-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="VenusWaterLoss.html">Water Loss on Venus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RadHeat.html">RadHeat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AtMescKepler-36.html">Kepler-36 Atmospheric Escape</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EarthInterior.html">EarthInterior</a></li>
-<li class="toctree-l2"><a class="reference internal" href="BinaryTides.html">Evolution of Tight Stellar Binaries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Milankovitch.html">Seasonal and Milankovitch Climate Cycles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="SSDistOrbDistRot.html">Solar System Orbital Dynamics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="VenusInterior.html">VenusInterior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CassiniStates.html">Cassini States</a></li>
-<li class="toctree-l2"><a class="reference internal" href="GalHabit.html">Galactic Evolution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Corot-7.html">Orbital Damping in the CoRoT-7 System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MainSequence.html">Stellar evolution</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Magnetic Braking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="VenusApproxInterior.html">Thermal and Magnetic Evolution of Venus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MagmOc_Earth.html">Magma Ocean Evolution of Earth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ApseLock.html">Apsidal Locking of the CoRoT-7 System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="STEEP.html">STEEP: Coupled Stellar-Tidal Evolution of Binary Orbits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GalaxyEffects.html">Evolution of a Wide Stellar Binary due to Galactic Effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AtmEscKepler-36.html">Kepler-36 Atmospheric Escape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DampedCBP.html">Evolution of a Planet Orbiting a Short-Period Binary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CircumbinaryOrbit.html">Orbital Evolution of the Circumbinary Planet Kepler-16 b</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EarthClimate.html">Earth’s Seasonal and Milankovitch Climate Cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RadHeat.html">Radiogenic Heating of Earth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HabEvapCore.html">Proxima Centauri b as a “Habitable Evaporated Core.”</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Stellar Magnetic Braking</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#to-run-this-example">To run this example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#expected-output">Expected output</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="IoHeat.html">IoHeat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="EarthMoonTides.html">Tidal Evolution of the Earth-Moon System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="O2BuildUp.html">Oxygen Buildup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ParameterSweep.html">Parameter Sweep Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MagmOc_Trappist1g.html">Magma ocean evolution of Trappist-1 g</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MagmOc_GJ1132b.html">Magma ocean evolution on GJ 1132 b</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SS_NBody.html">N-body Orbital Evolution of the Solar System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SSDistOrbDistRot.html">Solar System Orbital Dynamics from Secular Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TidalEarth.html">Tidal Evolution of Earth-like Exoplanet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HLossTides.html">Hydrogen Envelope Loss on Tidally Evolving Planets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TideLock.html">Tidal Locking of the Planet Candidate Gl 581 d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CassiniMulti.html">Multiple Cassini States in One System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IceBelts.html">Ice Belt Formation on High Obliquity Planets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VenusWaterLoss.html">Water Loss on Venus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AtmEscRegimes.html">Atmospheric Erosion of H Envelopes in the Energy-, Radiation/Recombination-, and Bondi-limited Regimes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IoHeat.html">Tidal Heating of Io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MiniNeptuneEvap.html">Atmospheric Erosion of Mini-Neptunes with the Lehmer &amp; Catling (2017) Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WaterLossTides.html">Water Loss on a Tidally Evolving Planet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NBodyAtmEsc.html">Coupling Atmospheric Escape and N-Body Evolution: Application to PSR1257+12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BinaryTides.html">Evolution of Tight Stellar Binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AbioticO2.html">Accumulation of Atmospheric Oxygen due to Water Photolysis and Hydrogen Escape.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="StellarEvol.html">(Pre-)Main Sequence Stellar Evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EarthInterior.html">Thermal and Magnetic Evolution of Earth’s Interior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ChaoticResonances.html">Chaotic Eccentricity-Inclination Resonances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#broken">Broken</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../src.html">C API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vplot.html">VPLOT</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developers.html">For developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parametersweep.html">Parameter Sweep Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">VPLanet Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Contributor’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../repos.html">Other VPLanet Repositories</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplanet">GitHub</a></li>
 </ul>
 
@@ -135,7 +164,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">vplanet</a>
+        <a href="../index.html">VPLanet</a>
       </nav>
 
 
@@ -150,12 +179,12 @@
 
 <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">vplanet</a> &raquo;</li>
+    <li><a href="../index.html">VPLanet</a> &raquo;</li>
       
         <li><a href="../examples.html">Examples</a>&raquo;</li>
       
     
-      <li>Magnetic Braking</li>
+      <li>Stellar Magnetic Braking</li>
     
       <li class="wy-breadcrumbs-aside">
         
@@ -168,54 +197,68 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="magnetic-braking">
-<h1>Magnetic Braking<a class="headerlink" href="#magnetic-braking" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
+  <section id="stellar-magnetic-braking">
+<h1>Stellar Magnetic Braking<a class="headerlink" href="#stellar-magnetic-braking" title="Permalink to this headline">¶</a></h1>
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Rotational evolution of stars due to magnetic effects.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="15%" />
-<col width="85%" />
+<col style="width: 59%" />
+<col style="width: 41%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Date</strong></td>
-<td>10/21/18</td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Date</strong></p></td>
+<td><p>06/19/19</p></td>
 </tr>
-<tr class="row-even"><td><strong>Author</strong></td>
-<td>David Fleming</td>
+<tr class="row-even"><td><p><strong>Author</strong></p></td>
+<td><p>David Fleming</p></td>
 </tr>
-<tr class="row-odd"><td><strong>Modules</strong></td>
-<td>stellar</td>
+<tr class="row-odd"><td><p><strong>Modules</strong></p></td>
+<td><p>STELLAR</p></td>
 </tr>
-<tr class="row-even"><td><strong>Approx. runtime</strong></td>
-<td>2 minutes</td>
-</tr>
-<tr class="row-odd"><td><strong>Source code</strong></td>
-<td><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplanet-private/tree/master/examples/MagneticBraking">GitHub</a></td>
+<tr class="row-even"><td><p><strong>Approx. runtime</strong></p></td>
+<td><p>2 minutes</p></td>
 </tr>
 </tbody>
 </table>
-<p>Rotation period evolution for 0.1 and 1.0 Msun stars due to stellar
-evolution and magnetic braking.  We compare the how our different available
-magnetic braking laws (Reiners &amp; Mohanty (2012), Repetto &amp; Nelemans (2014),
-and Matt et al. (2015)) impact the rotation period evolution.</p>
-</div>
-<div class="section" id="to-run-this-example">
+<p>Rotation period evolution for 0.1 and 1.0 solar-mass stars due to stellar
+evolution and magnetic braking. This example shows how the three available
+magnetic braking laws (<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2012ApJ...746...43R/abstract">Reiners &amp; Mohanty [2012]</a>, <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2014MNRAS.444..542R/abstract">Repetto &amp; Nelemans [2014]</a>,
+and <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2015ApJ...799L..23M/abstract">Matt et al. [2015]</a>) impact the rotation period.</p>
+<p>This example also demonstrates how the VPLanet implementation of the <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2015ApJ...799L..23M/abstract">Matt et al. [2015]</a>
+magnetic braking model can be used to reproduce the upper enveloped of the Kepler
+field stellar rotation period distribution, a main result from <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2015ApJ...799L..23M/abstract">Matt et al. [2015]</a>.</p>
+</section>
+<section id="to-run-this-example">
 <h2>To run this example<a class="headerlink" href="#to-run-this-example" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python makeplot.py &lt;pdf <span class="p">|</span> png&gt;
 </pre></div>
 </div>
-</div>
-<div class="section" id="expected-output">
+</section>
+<section id="expected-output">
 <h2>Expected output<a class="headerlink" href="#expected-output" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-center" id="id1">
+<figure class="align-center">
 <a class="reference internal image-reference" href="examples/MagneticBraking.png"><img alt="examples/MagneticBraking.png" src="examples/MagneticBraking.png" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text">Rotation period evolution for a 0.1 and 1 Msun star due to stellar evolution
-(Baraffe et al. (2015)) and one of the 3 available magnetic braking laws.</span></p>
-</div>
-</div>
-</div>
+</figure>
+<p>Rotation period evolution of 0.1 and 1 solar-mass stars due to stellar evolution
+(<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2015A%26A...577A..42B/abstract">Baraffe et al. 2015</a>) and the three magnetic braking laws.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="examples/kepler.png"><img alt="examples/kepler.png" src="examples/kepler.png" style="width: 600px;" /></a>
+</figure>
+<p>Rotation period distribution of a ~4 Gyr-old synthetic cluster of stars
+simulated using STELLAR with the <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2015ApJ...799L..23M/abstract">Matt et al. [2015]</a> magnetic braking model
+(black, adapting VPLanet simulations from <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2019arXiv190305686F/abstract">Fleming et al. [2019]</a>). Following Fig. (3) in
+Matt et al. [2015], we compare the <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2019arXiv190305686F/abstract">Fleming et al. [2019]</a> simulated distribution to
+the rotation distribution of Kepler field stars (red) measured by
+<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2014ApJS..211...24M/abstract">McQuillan et al. [2014]</a>. For reference, we plot the modern solar rotation period
+as a blue star. Using STELLAR, <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2019arXiv190305686F/abstract">Fleming et al. [2019]</a>
+recover the <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2015ApJ...799L..23M/abstract">Matt et al. [2015]</a>
+result that the upper envelope of the Kepler stellar rotation period
+distribution is well-matched by a 4 Gyr-old synthetic cluster, validating the
+STELLAR implementation of the <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2015ApJ...799L..23M/abstract">Matt et al. [2015]</a> magnetic braking model.</p>
+</section>
+</section>
 
 
            </div>
@@ -224,10 +267,10 @@ and Matt et al. (2015)) impact the rotation period evolution.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="IoHeat.html" class="btn btn-neutral float-right" title="IoHeat" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ParameterSweep.html" class="btn btn-neutral float-right" title="Parameter Sweep Example" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="MainSequence.html" class="btn btn-neutral" title="Stellar evolution" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="HabEvapCore.html" class="btn btn-neutral" title="Proxima Centauri b as a “Habitable Evaporated Core.”" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -236,14 +279,13 @@ and Matt et al. (2015)) impact the rotation period evolution.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, The VPLANET Team.
+        &copy; Copyright 2018, The VPLanet Team.
 
     </p>
   </div>
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -258,12 +300,13 @@ and Matt et al. (2015)) impact the rotation period evolution.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.9.0',
+            VERSION:'2.0.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

@@ -1,1 +1,0 @@
-.. include:: ../../examples/O2BuildUp/README.rst

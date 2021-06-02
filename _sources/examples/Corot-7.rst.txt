@@ -1,1 +1,0 @@
-.. include:: ../../examples/Corot-7/README.rst

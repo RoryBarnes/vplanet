@@ -1,10 +1,10 @@
 Examples
 ========
 
-A collection of example input files and scripts using **vplanet** that
+A collection of example input files and scripts using **VPLanet** that
 showcase the various applications of the code. The source files for
 the examples below live in the :code:`examples` folder in the top-level
-directory of the :code:`VPLANET` repository.
+directory of the :code:`VPLanet` repository.
 `View them on GitHub <https://github.com/VirtualPlanetaryLaboratory/vplanet-private/tree/master/examples>`_.
 
 .. toctree::
@@ -12,21 +12,49 @@ directory of the :code:`VPLANET` repository.
 
 
 
-   examples/SpiNBody
-   examples/Kepler-16
-   examples/VenusWaterLoss
-   examples/RadHeat
-   examples/AtMescKepler-36
-   examples/EarthInterior
-   examples/BinaryTides
-   examples/Milankovitch
-   examples/SSDistOrbDistRot
-   examples/VenusInterior
    examples/CassiniStates
-   examples/GalHabit
-   examples/Corot-7
-   examples/MainSequence
+   examples/VenusApproxInterior
+   examples/MagmOc_Earth
+   examples/ApseLock
+   examples/STEEP
+   examples/GalaxyEffects
+   examples/AtmEscKepler-36
+   examples/DampedCBP
+   examples/CircumbinaryOrbit
+   examples/EarthClimate
+   examples/RadHeat
+   examples/HabEvapCore
    examples/MagneticBraking
+   examples/ParameterSweep
+   examples/MagmOc_Trappist1g
+   examples/MagmOc_GJ1132b
+   examples/SS_NBody
+   examples/SSDistOrbDistRot
+   examples/TidalEarth
+   examples/HLossTides
+   examples/TideLock
+   examples/CassiniMulti
+   examples/IceBelts
+   examples/VenusWaterLoss
+   examples/AtmEscRegimes
    examples/IoHeat
-   examples/EarthMoonTides
-   examples/O2BuildUp
+   examples/MiniNeptuneEvap
+   examples/WaterLossTides
+   examples/NBodyAtmEsc
+   examples/BinaryTides
+   examples/AbioticO2
+   examples/StellarEvol
+   examples/EarthInterior
+   examples/ChaoticResonances
+
+
+Broken
+------
+
+Currently broken examples in need of your help!
+
+.. toctree::
+   :maxdepth: 1
+
+
+
